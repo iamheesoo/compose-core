@@ -2,5 +2,6 @@ package com.example.composecore.ui.theme
 
 enum class Navigation {
     MAIN,
-    WEB
+    WEB,
+    COLUMN_SAMPLE,
 }
