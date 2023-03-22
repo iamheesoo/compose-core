@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composecore.screen.MainScreen
+import com.example.composecore.screen.WebScreen
 import com.example.composecore.ui.theme.ComposeCoreTheme
 import com.example.composecore.ui.theme.Navigation
 
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
                         composable(navigation.name) {
                             when (navigation) {
                                 Navigation.MAIN -> MainScreen(navController = navController)
+                                Navigation.WEB -> WebScreen()
                             }
                         }
                     }
