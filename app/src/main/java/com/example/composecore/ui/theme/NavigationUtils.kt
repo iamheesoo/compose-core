@@ -4,5 +4,6 @@ enum class Navigation {
     MAIN,
     WEB,
     COLUMN_SAMPLE,
-    FLOATING_BUTTON
+    FLOATING_BUTTON,
+    HORIZONTAL_TAB
 }
