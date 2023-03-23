@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composecore.screen.ColumnSampleScreen
+import com.example.composecore.screen.FloatingButtonScreen
 import com.example.composecore.screen.MainScreen
 import com.example.composecore.screen.WebScreen
 import com.example.composecore.ui.theme.ComposeCoreTheme
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
                                 Navigation.MAIN -> MainScreen(navController = navController)
                                 Navigation.WEB -> WebScreen()
                                 Navigation.COLUMN_SAMPLE -> ColumnSampleScreen(navController = navController)
+                                Navigation.FLOATING_BUTTON -> FloatingButtonScreen()
                             }
                         }
                     }
