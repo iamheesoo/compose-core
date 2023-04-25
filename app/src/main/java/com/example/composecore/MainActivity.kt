@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.composecore.screen.BottomSheetScaffoldScreen
 import com.example.composecore.screen.ColumnSampleScreen
 import com.example.composecore.screen.FloatingButtonScreen
 import com.example.composecore.screen.MainScreen
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
                                 Navigation.COLUMN_SAMPLE -> ColumnSampleScreen(navController = navController)
                                 Navigation.FLOATING_BUTTON -> FloatingButtonScreen()
                                 Navigation.HORIZONTAL_TAB -> HorizontalTabScreen()
+                                Navigation.BOTTOM_SHEET_SCAFFOLD -> BottomSheetScaffoldScreen()
                             }
                         }
                     }

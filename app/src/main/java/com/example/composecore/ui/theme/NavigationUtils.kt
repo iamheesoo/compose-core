@@ -5,5 +5,6 @@ enum class Navigation {
     WEB,
     COLUMN_SAMPLE,
     FLOATING_BUTTON,
-    HORIZONTAL_TAB
+    HORIZONTAL_TAB,
+    BOTTOM_SHEET_SCAFFOLD
 }
