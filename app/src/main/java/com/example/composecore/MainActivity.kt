@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.composecore.screen.BottomSheetScaffoldScreen
 import com.example.composecore.screen.ColumnSampleScreen
 import com.example.composecore.screen.FloatingButtonScreen
+import com.example.composecore.screen.GradientSliderScreen
 import com.example.composecore.screen.MainScreen
 import com.example.composecore.screen.HorizontalTabScreen
 import com.example.composecore.screen.WebScreen
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
                                 Navigation.FLOATING_BUTTON -> FloatingButtonScreen()
                                 Navigation.HORIZONTAL_TAB -> HorizontalTabScreen()
                                 Navigation.BOTTOM_SHEET_SCAFFOLD -> BottomSheetScaffoldScreen()
+                                Navigation.GRADIENT_SLIDER -> GradientSliderScreen()
                             }
                         }
                     }
