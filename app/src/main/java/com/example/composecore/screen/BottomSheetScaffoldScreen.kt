@@ -1,5 +1,6 @@
 package com.example.composecore.screen
 
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -37,7 +38,13 @@ import kotlinx.coroutines.delay
 fun BottomSheetScaffoldScreen() {
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(
-            initialValue = BottomSheetValue.Collapsed
+            initialValue = BottomSheetValue.Collapsed,
+            animationSpec = tween(
+                durationMillis = 1000,
+                easing = {
+                    BetterBounceInterpolator(1, 0.8).getInterpolation(it)
+                }
+            )
         )
     )
 
@@ -47,15 +54,7 @@ fun BottomSheetScaffoldScreen() {
      */
     LaunchedEffect(true) {
         delay(1000)
-        bottomSheetScaffoldState.bottomSheetState.animateTo(
-            targetValue = BottomSheetValue.Expanded,
-            anim = tween(
-                durationMillis = 1000,
-                easing = {
-                    BetterBounceInterpolator(1, 0.8).getInterpolation(it)
-                }
-            )
-        )
+        bottomSheetScaffoldState.bottomSheetState.expand()
     }
 
 
