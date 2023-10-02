@@ -12,6 +12,7 @@ import com.example.composecore.screen.FloatingButtonScreen
 import com.example.composecore.screen.GradientSliderScreen
 import com.example.composecore.screen.MainScreen
 import com.example.composecore.screen.HorizontalTabScreen
+import com.example.composecore.screen.TxssCoupleBankScreen
 import com.example.composecore.screen.WebScreen
 import com.example.composecore.ui.theme.ComposeCoreTheme
 import com.example.composecore.ui.theme.Navigation
@@ -34,6 +35,7 @@ class MainActivity : ComponentActivity() {
                                 Navigation.HORIZONTAL_TAB -> HorizontalTabScreen()
                                 Navigation.BOTTOM_SHEET_SCAFFOLD -> BottomSheetScaffoldScreen()
                                 Navigation.GRADIENT_SLIDER -> GradientSliderScreen()
+                                Navigation.TXSS_COUPLE_BANK -> TxssCoupleBankScreen()
                             }
                         }
                     }
