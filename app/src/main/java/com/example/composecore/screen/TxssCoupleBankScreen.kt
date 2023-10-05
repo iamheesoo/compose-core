@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +26,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -118,8 +120,14 @@ fun TxssCoupleBankScreen() {
                     ),
                     containerColor = Gray50_70p,
                     contentColor = Gray600,
+                    divider = {},
                     indicator = { tabPositions ->
-
+                        Box(modifier = Modifier
+                            .tabIndicatorOffset(tabPositions[pagerState.currentPage])
+                            .height(2.dp)
+                            .padding(horizontal = 10.dp)
+                            .background(color = Color.White, shape = RoundedCornerShape(8.dp))
+                        )
                     },
                 ) {
                     pageList.forEachIndexed { index, page ->
