@@ -39,10 +39,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composecore.R
 import com.example.composecore.core.onClick
+import com.example.composecore.txss.BottomSheetContent
 import com.example.composecore.txss.HeartShape
 import com.example.composecore.txss.TxssBottomBar
 import com.example.composecore.txss.TxssTopBar
 import com.example.composecore.txss.transactionHistory
+import com.example.composecore.ui.theme.Gray100
 import com.example.composecore.ui.theme.Gray200
 import com.example.composecore.ui.theme.Gray50
 import com.example.composecore.ui.theme.Gray600
@@ -76,9 +78,15 @@ fun TxssCoupleBankScreen() {
 
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
-        sheetContainerColor = Gray200,
+        sheetContainerColor = Gray100,
         sheetContent = {
-            Text("sheetContent")
+            BottomSheetContent(
+                onButtonClick = {
+                    coroutineScope.launch {
+                        bottomSheetScaffoldState.bottomSheetState.hide()
+                    }
+                }
+            )
         },
     ) {
         Scaffold(
