@@ -30,18 +30,20 @@ import com.example.composecore.ui.theme.Gray400
 import com.example.composecore.ui.theme.Gray50
 import com.example.composecore.ui.theme.Gray700
 
-fun LazyListScope.transactionHistory() {
+fun LazyListScope.transactionHistory(isBottomSheetVisible: Boolean) {
     item {
-        Menu()
+        Menu(isBottomSheetVisible)
     }
     items(txssDummyList.size) { index ->
-        TransactionItem(txssDummyList[index])
+        TransactionItem(
+            data = txssDummyList[index]
+        )
     }
 }
 
 
 @Composable
-fun Menu() {
+fun Menu(isBottomSheetVisible: Boolean) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -127,7 +129,11 @@ fun TransactionItem(data: MoneyData) {
                     color = Color.White,
                     fontSize = 16.sp
                 )
-                Text(text = data.time, color = Color.White, fontSize = 14.sp)
+                Text(
+                    text = data.time,
+                    color = Color.White,
+                    fontSize = 14.sp
+                )
             }
             Column(
                 modifier = Modifier.align(Alignment.CenterEnd),
@@ -139,7 +145,11 @@ fun TransactionItem(data: MoneyData) {
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                Text(text = "${data.restMoney.toMoney()}원", color = Gray700, fontSize = 14.sp)
+                Text(
+                    text = "${data.restMoney.toMoney()}원",
+                    color = Gray700,
+                    fontSize = 14.sp
+                )
             }
         }
 
