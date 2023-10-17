@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -28,8 +29,7 @@ import com.example.composecore.ui.theme.Gray750
 
 
 @Composable
-@Preview
-fun TxssTopBar() {
+fun TxssTopBar(imageAlpha: Float) {
     Column(
         modifier = Modifier
             .background(color = Gray200)
@@ -79,6 +79,7 @@ fun TxssTopBar() {
                     .align(Alignment.CenterEnd)
                     .size(50.dp)
                     .clip(HeartShape)
+                    .alpha(imageAlpha)
             )
         }
     }
