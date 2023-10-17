@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -58,40 +59,9 @@ fun TxssCoupleBankScreen() {
         containerColor = Gray200
     ) { innerPadding ->
         LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = innerPadding
+            modifier = Modifier.padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            stickyHeader {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.align(Alignment.CenterStart)
-                    ) {
-                        Text(
-                            text = "커플통장 이름",
-                            color = Gray400,
-                            fontSize = 13.sp
-                        )
-                        Text(
-                            text = "382,088원",
-                            color = Gray750,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 27.sp
-                        )
-                    }
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_launcher_background),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .size(50.dp)
-                            .clip(HeartShape)
-                    )
-                }
-            }
             item {
                 Image(
                     painter = painterResource(id = R.drawable.ic_launcher_background),
@@ -101,7 +71,7 @@ fun TxssCoupleBankScreen() {
                         .clip(HeartShape)
                 )
             }
-            item {
+            stickyHeader {
                 TabRow(
                     selectedTabIndex = tabIndex,
                     modifier = Modifier.clip(
