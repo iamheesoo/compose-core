@@ -30,9 +30,9 @@ import com.example.composecore.ui.theme.Gray400
 import com.example.composecore.ui.theme.Gray50
 import com.example.composecore.ui.theme.Gray700
 
-fun LazyListScope.transactionHistory(isBottomSheetVisible: Boolean) {
+fun LazyListScope.transactionHistory() {
     item {
-        Menu(isBottomSheetVisible)
+        Menu()
     }
     items(txssDummyList.size) { index ->
         TransactionItem(
@@ -43,7 +43,7 @@ fun LazyListScope.transactionHistory(isBottomSheetVisible: Boolean) {
 
 
 @Composable
-fun Menu(isBottomSheetVisible: Boolean) {
+fun Menu() {
     Column(
         modifier = Modifier
             .fillMaxWidth()

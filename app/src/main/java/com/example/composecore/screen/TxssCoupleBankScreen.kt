@@ -6,7 +6,6 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -32,6 +31,7 @@ import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -55,6 +55,7 @@ import com.example.composecore.txss.BottomSheetContent
 import com.example.composecore.txss.HeartShape
 import com.example.composecore.txss.TxssBottomBar
 import com.example.composecore.txss.TxssTopBar
+import com.example.composecore.txss.consumption
 import com.example.composecore.txss.transactionHistory
 import com.example.composecore.ui.theme.Gray100
 import com.example.composecore.ui.theme.Gray200
@@ -62,7 +63,6 @@ import com.example.composecore.ui.theme.Gray50
 import com.example.composecore.ui.theme.Gray600
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.importre.unwrap.unwrap
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -73,7 +73,7 @@ import kotlinx.coroutines.launch
 @Preview
 fun TxssCoupleBankScreen() {
     val pageList = listOf("거래내역", "소비")
-    var tabIndex by remember { mutableStateOf(0) }
+    var tabIndex by remember { mutableIntStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
     val listState = rememberLazyListState()
     val isBigHeartVisible by remember { derivedStateOf { listState.firstVisibleItemIndex == 0 } }
@@ -261,13 +261,8 @@ fun TxssCoupleBankScreen() {
                 }
 
                 when (tabIndex) {
-                    0 -> transactionHistory(
-                        isBottomSheetVisible = isBottomSheetVisible
-                    )
-
-                    else -> item {
-                        Text("text1")
-                    }
+                    0 -> transactionHistory()
+                    else -> consumption()
                 }
             }
         }
