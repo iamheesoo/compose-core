@@ -82,11 +82,12 @@ fun TxssTopBar(imageAlpha: Float, heartImage: Bitmap?) {
                         .align(Alignment.CenterEnd)
                         .size(50.dp)
                         .clip(HeartShape)
-                        .alpha(imageAlpha)
+                        .alpha(imageAlpha),
+                    contentScale = ContentScale.Crop
                 )
             } ?: run {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    painter = painterResource(id = R.drawable.smile_emoji),
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.CenterEnd)

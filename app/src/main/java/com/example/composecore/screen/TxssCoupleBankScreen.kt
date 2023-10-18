@@ -136,7 +136,11 @@ fun TxssCoupleBankScreen() {
                     }
                 },
                 onDefaultClick = {
-
+                    coroutineScope.launch {
+                        bottomSheetScaffoldState.bottomSheetState.hide()
+                    }
+                    imageUri = null
+                    bitmap = null
                 },
                 onCloseClick = {
                     coroutineScope.launch {
@@ -197,7 +201,7 @@ fun TxssCoupleBankScreen() {
                         )
                     } ?: run {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_background),
+                            painter = painterResource(id = R.drawable.smile_emoji),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(300.dp)
