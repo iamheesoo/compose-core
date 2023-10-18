@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composecore.R
+import com.example.composecore.core.onClick
 import com.example.composecore.ui.theme.Blue100
 import com.example.composecore.ui.theme.Gray400
 import com.example.composecore.ui.theme.Gray550
@@ -30,7 +31,9 @@ import com.example.composecore.ui.theme.Red200
 
 @Composable
 fun BottomSheetContent(
-    onButtonClick: () -> Unit
+    onGalleryClick: () -> Unit,
+    onDefaultClick: () -> Unit,
+    onCloseClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -44,8 +47,18 @@ fun BottomSheetContent(
             color = Color.White,
             fontSize = 20.sp
         )
-        BottomSheetRowContent(image = R.drawable.round_image_24, text = "내 사진첩에서 고르기", color = Green400)
-        BottomSheetRowContent(image = R.drawable.round_favorite_24, text = "기본 이미지로 적용하기", color = Red200)
+        BottomSheetRowContent(
+            image = R.drawable.round_image_24,
+            text = "내 사진첩에서 고르기",
+            color = Green400,
+            onClick = onGalleryClick
+        )
+        BottomSheetRowContent(
+            image = R.drawable.round_favorite_24,
+            text = "기본 이미지로 적용하기",
+            color = Red200,
+            onClick = onDefaultClick
+        )
         Button(
             modifier = Modifier
                 .fillMaxWidth()
@@ -58,7 +71,7 @@ fun BottomSheetContent(
             ),
             shape = RoundedCornerShape(14.dp),
             onClick = {
-                onButtonClick.invoke()
+                onCloseClick.invoke()
             }) {
             Text(
                 text = "닫기",
@@ -75,11 +88,13 @@ fun BottomSheetContent(
 fun BottomSheetRowContent(
     @DrawableRes image: Int,
     @ColorRes color: Color,
-    text: String
+    text: String,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .onClick { onClick.invoke() }
             .padding(vertical = 10.dp)
     ) {
         Row(

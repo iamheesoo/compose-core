@@ -1,5 +1,14 @@
 package com.example.composecore.screen
 
+import android.Manifest
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,7 +40,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,10 +60,14 @@ import com.example.composecore.ui.theme.Gray100
 import com.example.composecore.ui.theme.Gray200
 import com.example.composecore.ui.theme.Gray50
 import com.example.composecore.ui.theme.Gray600
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.importre.unwrap.unwrap
 import kotlinx.coroutines.launch
 
 @OptIn(
-    ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class
+    ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
+    ExperimentalPermissionsApi::class
 )
 @Composable
 @Preview
@@ -76,12 +92,53 @@ fun TxssCoupleBankScreen() {
     )
     val isBottomSheetVisible = bottomSheetScaffoldState.bottomSheetState.isVisible
 
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri ->
+            imageUri = uri
+        }
+    )
+    val permissionList =
+        rememberMultiplePermissionsState(
+            permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                listOf(Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO)
+            } else {
+                listOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            },
+            onPermissionsResult = {
+                if (it.values.all { true }) {
+                    coroutineScope.launch {
+                        bottomSheetScaffoldState.bottomSheetState.hide()
+                    }
+                    launcher.launch("image/*")
+                }
+            }
+        )
+    val context = LocalContext.current
+
+
+
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         sheetContainerColor = Gray100,
         sheetContent = {
             BottomSheetContent(
-                onButtonClick = {
+                onGalleryClick = {
+                    if (permissionList.allPermissionsGranted) {
+                        coroutineScope.launch {
+                            bottomSheetScaffoldState.bottomSheetState.hide()
+                        }
+                        launcher.launch("image/*")
+                    } else {
+                        permissionList.launchMultiplePermissionRequest()
+                    }
+                },
+                onDefaultClick = {
+
+                },
+                onCloseClick = {
                     coroutineScope.launch {
                         bottomSheetScaffoldState.bottomSheetState.hide()
                     }
@@ -101,8 +158,17 @@ fun TxssCoupleBankScreen() {
                     }
                 },
             topBar = {
+                imageUri?.let {
+                    bitmap = if (Build.VERSION.SDK_INT < 28) {
+                        MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+                    } else {
+                        val source = ImageDecoder.createSource(context.contentResolver, it)
+                        ImageDecoder.decodeBitmap(source)
+                    }
+                }
                 TxssTopBar(
-                    imageAlpha = topBarHeartAlpha
+                    imageAlpha = topBarHeartAlpha,
+                    heartImage = bitmap
                 )
             },
             bottomBar = { TxssBottomBar() },
@@ -114,21 +180,37 @@ fun TxssCoupleBankScreen() {
                 state = listState
             ) {
                 item {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_launcher_background),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(300.dp)
-                            .clip(HeartShape)
-                            .onClick {
-                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                coroutineScope.launch {
-                                    if (!isBottomSheetVisible) {
+                    bitmap?.let {
+                        Image(
+                            bitmap = it.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(300.dp)
+                                .clip(HeartShape)
+                                .onClick {
+                                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    coroutineScope.launch {
                                         bottomSheetScaffoldState.bottomSheetState.expand()
                                     }
-                                }
-                            }
-                    )
+                                },
+                            contentScale = ContentScale.Crop
+                        )
+                    } ?: run {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_launcher_background),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(300.dp)
+                                .clip(HeartShape)
+                                .onClick {
+                                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    coroutineScope.launch {
+                                        bottomSheetScaffoldState.bottomSheetState.expand()
+                                    }
+                                },
+                            contentScale = ContentScale.Crop
+                        )
+                    }
                 }
                 stickyHeader {
                     TabRow(

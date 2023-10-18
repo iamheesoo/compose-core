@@ -1,5 +1,6 @@
 package com.example.composecore.txss
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -28,7 +31,7 @@ import com.example.composecore.ui.theme.Gray750
 
 
 @Composable
-fun TxssTopBar(imageAlpha: Float) {
+fun TxssTopBar(imageAlpha: Float, heartImage: Bitmap?) {
     Column(
         modifier = Modifier
             .background(color = Gray200)
@@ -71,16 +74,28 @@ fun TxssTopBar(imageAlpha: Float) {
                     fontSize = 27.sp
                 )
             }
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = null,
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .size(50.dp)
-                    .clip(HeartShape)
-                    .alpha(imageAlpha)
-            )
+            heartImage?.let {
+                Image(
+                    bitmap = it.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .size(50.dp)
+                        .clip(HeartShape)
+                        .alpha(imageAlpha)
+                )
+            } ?: run {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .size(50.dp)
+                        .clip(HeartShape)
+                        .alpha(imageAlpha),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
     }
-
 }
