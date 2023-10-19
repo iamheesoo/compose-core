@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,6 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composecore.R
 import com.example.composecore.extensions.toMoney
+import com.example.composecore.ui.theme.Blue100
+import com.example.composecore.ui.theme.Gray100
 import com.example.composecore.ui.theme.Gray200
 import com.example.composecore.ui.theme.Gray50
 import com.example.composecore.ui.theme.Gray500
@@ -143,11 +147,46 @@ fun LazyListScope.consumption() {
         )
     }
     item {
+        Box(
+            modifier = Modifier
+                .background(color = Gray50)
+                .padding(top = 10.dp, start = 16.dp, end = 16.dp)
+                .fillMaxWidth()
+                .background(color = Gray100, shape = RoundedCornerShape(8.dp))
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Row(
+                modifier = Modifier.align(Alignment.CenterStart),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.round_how_to_vote_24),
+                    contentDescription = "vote",
+                    colorFilter = ColorFilter.tint(color = Blue100),
+                    modifier = Modifier.size(24.dp)
+                )
+                Text(
+                    text = "희수님의 의견을 듣고싶어요",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(start = 14.dp)
+                )
+            }
+            Image(
+                painter = painterResource(id = R.drawable.round_keyboard_arrow_right_24),
+                contentDescription = "more",
+                colorFilter = ColorFilter.tint(Gray200),
+                modifier = Modifier.align(Alignment.CenterEnd)
+            )
+        }
+    }
+    item {
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Gray50)
-                .padding(bottom = 20.dp)
+                .padding(bottom = 200.dp)
         )
     }
 }
