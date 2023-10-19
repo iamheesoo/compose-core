@@ -2,6 +2,9 @@ package com.example.composecore.txss
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animate
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,6 +17,11 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +35,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composecore.R
+import com.example.composecore.extensions.toMoney
 import com.example.composecore.ui.theme.Gray200
 import com.example.composecore.ui.theme.Gray50
 import com.example.composecore.ui.theme.Gray500
@@ -55,16 +64,9 @@ fun LazyListScope.consumption() {
         }
     }
     item {
-        Text(
-            text = "총 271,162원",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Gray50)
-                .padding(top = 20.dp, start = 16.dp, end = 16.dp)
-        )
+        AnimatedText()
+    }
+    item {
         Text(
             text = buildAnnotatedString {
                 withStyle(
@@ -192,4 +194,36 @@ fun ConsumptionInfo(
             )
         }
     }
+}
+
+@Composable
+fun AnimatedText() {
+    var animatedValue by remember {
+        mutableLongStateOf(0L)
+    }
+    LaunchedEffect(true) {
+        val animationSpec = tween<Float>(
+            durationMillis = 2000,
+            easing = LinearEasing
+        )
+        animate(
+            initialValue = 0f,
+            targetValue = 271162f,
+            animationSpec = animationSpec,
+            block = { value, _ ->
+                animatedValue = value.toLong()
+            }
+        )
+    }
+
+    Text(
+        text = "총 ${animatedValue.toMoney()}원",
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.White,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Gray50)
+            .padding(top = 20.dp, start = 16.dp, end = 16.dp)
+    )
 }
