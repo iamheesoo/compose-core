@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.composecore.flowrow.FlowRowScreen
 import com.example.composecore.screen.BottomSheetScaffoldScreen
 import com.example.composecore.screen.ColumnSampleScreen
 import com.example.composecore.screen.FloatingButtonScreen
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
                                 Navigation.BOTTOM_SHEET_SCAFFOLD -> BottomSheetScaffoldScreen()
                                 Navigation.GRADIENT_SLIDER -> GradientSliderScreen()
                                 Navigation.TXSS_COUPLE_BANK -> TxssCoupleBankScreen()
+                                Navigation.FLOW_ROW_MAX_LINE -> FlowRowScreen()
                             }
                         }
                     }
