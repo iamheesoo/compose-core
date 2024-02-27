@@ -79,4 +79,6 @@ dependencies {
     implementation 'com.google.accompanist:accompanist-permissions:0.31.5-beta'
 
     implementation "com.importre:kotlin-unwrap:0.3.2"
+
+    implementation("com.mxalbert.sharedelements:shared-elements:0.1.0-SNAPSHOT")
 }

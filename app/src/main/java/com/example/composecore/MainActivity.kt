@@ -7,14 +7,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composecore.flowrow.FlowRowScreen
+import com.example.composecore.lottie.LottieScreen
 import com.example.composecore.screen.BottomSheetScaffoldScreen
 import com.example.composecore.screen.ColumnSampleScreen
 import com.example.composecore.screen.FloatingButtonScreen
 import com.example.composecore.screen.GradientSliderScreen
-import com.example.composecore.screen.MainScreen
 import com.example.composecore.screen.HorizontalTabScreen
+import com.example.composecore.screen.MainScreen
 import com.example.composecore.screen.TxssCoupleBankScreen
 import com.example.composecore.screen.WebScreen
+import com.example.composecore.transition.ListTransitionScreen
 import com.example.composecore.ui.theme.ComposeCoreTheme
 import com.example.composecore.ui.theme.Navigation
 
@@ -38,6 +40,8 @@ class MainActivity : ComponentActivity() {
                                 Navigation.GRADIENT_SLIDER -> GradientSliderScreen()
                                 Navigation.TXSS_COUPLE_BANK -> TxssCoupleBankScreen()
                                 Navigation.FLOW_ROW_MAX_LINE -> FlowRowScreen()
+                                Navigation.LOTTIE -> LottieScreen()
+                                Navigation.LIST_TRANSITION -> ListTransitionScreen()
                             }
                         }
                     }
